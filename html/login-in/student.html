@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>学生平台</title>
+    <!-- 引入 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+    <style type="text/css">
+        html{
+            height: 100%;
+        }
+        body{
+            padding:0;
+            margin:0;
+            background-color: #e8e8e8;
+            height: 100%;
+            background-image: url("../../icon/student/bg.jpg");
+
+        }
+        #top-div{
+
+            width:100%;
+            height:80px;
+            background-color: rgba(105, 135, 174, 0.56);
+        }
+        #body-box{
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: row;
+            justify-content:space-around;
+            align-items: center;
+            padding-top: 150px;
+
+        }
+        #body-box p{
+            font: 45px 幼圆;
+            height:50px;
+            width:250px;
+            text-align: center;
+            letter-spacing: 5px;
+            line-height: 50px;
+            color: #1296db;
+        }
+        #information,#chooseclass,#myclass {
+            width: 250px;
+            height: 250px;
+            background-color: #fafafa;
+            border-radius: 30px;
+            box-shadow:0px 0px 8px #7b7b7b;
+        }
+        #item1,#item2,#item3{
+            top:80px;
+            width:150px;
+            height:100%;
+            display: none;
+        }
+        #item1 ul{
+            position:relative;
+            width:150px;
+            height:100%;
+            background-color: rgba(234, 215, 189, 0.6);
+        }
+
+        #item2 ul{
+            position:relative;
+            width:150px;
+            height:100%;
+            background-color: rgba(216, 198, 173, 0.6);
+        }
+        #item3 ul{
+            position:relative;
+            width:150px;
+            height:100%;
+            background-color: rgba(216, 198, 173, 0.61);
+        }
+        .el-col{
+            height:100%;
+        }
+        #item1 li{
+            color: #324157;
+        }
+        #item2 li{
+            color: #324157;
+        }
+        #item3 li{
+            color: #324157;
+        }
+        #return{
+            position:absolute;
+            bottom:0;
+            width:100%;
+        }
+        #second-box{
+            display: flex;
+            height:100%;
+            width:100%;
+            display: none;
+        }
+        #msg{
+            width:100%;
+            background-color: rgba(232, 232, 232, 0.6);
+            height:100%;
+            padding:0 10px;
+            overflow: hidden;
+
+
+        }
+        #smsg{
+            margin:0 auto;
+            width:500px;
+            height:auto;
+            margin-top: 50px;
+            display: none;
+
+        }
+        #smsg div:nth-child(odd){
+            background-color: #d2d2d2;
+        }
+        #smsg div:nth-last-child(n+2){
+            padding-left:20px;
+        }
+        #smsg div p{
+            display: inline-block;
+
+        }
+        #sphone div{
+            padding-left: 0;
+            display: inline-block;
+            width:180px;
+            margin-left: 10px;
+            background-color: #e8e8e8;
+
+        }
+        #sphone{
+            background-color: #e8e8e8;
+            margin-top: 5px;
+        }
+        #save{
+            width:500px;
+            text-align: center;
+            padding-top:5px;
+        }
+        #save button{
+            width:100px;
+        }
+        #experience{
+            width:100%;
+            display: none;
+            padding-top:10px;
+        }
+        #choose{
+            width:400px;
+            margin:0 auto;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        #choose div{
+            display: inline-block;
+        }
+        #choose input{
+            margin-top: 20px;
+            display: inline-block;
+            width: 200px;
+        }
+        #search-id{
+            width:200px;
+        }
+        #choose p{
+            color: red;
+        }
+        #choose button{
+            display: inline-block;
+            width:100px;
+            margin-top:42px;
+            margin-left: 20px;
+        }
+        #choosed{
+            background-color: #e8e8e8;
+        }
+        #drop{
+            display: none;
+            padding-top:10px;
+        }
+
+        .el-table__header-wrapper{
+            width:100%;
+
+        }
+        .el-table__header,.el-table__body{
+            width:100%!important;
+        }
+        #classbox,#scorebox{
+            display: none;
+            padding-top:10px;
+        }
+        .el-table_1_column_15{
+            text-align: center;
+        }
+        #classmsg{
+            margin-top:100px;
+            padding-top:10px;
+        }
+        #chooseclass img{
+            padding-top:10px;
+            padding-right: 10px;
+        }
+        </style>
+</head>
+<body>
+    <div id="top-div"></div>
+    <div id="body-box">
+        <div id="information" v-on:click="open1"><img src="../../icon/student/information.png" height="250" width="250"/><p>学生信息</p></div>
+        <div id="chooseclass" v-on:click="open2"><img src="../../icon/student/book.png" height="250" width="250"/><p>选课系统</p></div>
+        <div id="myclass" v-on:click="open3"><img src="../../icon/student/classtable.png" height="250" width="250"/><p>课表成绩</p></div>
+    </div>
+    <div id="second-box">
+    <div id="item1" class="item">
+        <el-col :span="8">
+        <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
+            <el-menu-item index="1" v-on:click="open1" v-bind:id="choosed1">个人信息</el-menu-item>
+            <el-menu-item index="2"  v-on:click="open2" v-bind:id="choosed2">奖惩记录</el-menu-item>
+            <el-menu-item index="3" id="return" v-on:click="returnnow">返回</el-menu-item>
+
+        </el-menu>
+        </el-col>
+    </div>
+    <div id="item2" class="item">
+        <el-col :span="8">
+            <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
+                <el-menu-item index="1" v-on:click="open1" v-bind:id="choosed1">选课</el-menu-item>
+                <el-menu-item index="2"  v-on:click="open2" v-bind:id="choosed2">退课</el-menu-item>
+                <el-menu-item index="3" id="return" v-on:click="returnnow">返回</el-menu-item>
+
+            </el-menu>
+        </el-col>
+    </div>
+    <div id="item3" class="item">
+        <el-col :span="8">
+            <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
+                <el-menu-item index="1" v-on:click="open1" v-bind:id="choosed1">查看课表</el-menu-item>
+                <el-menu-item index="2"  v-on:click="open2" v-bind:id="choosed2">历史成绩</el-menu-item>
+                <el-menu-item index="3" id="return" v-on:click="returnnow">返回</el-menu-item>
+
+            </el-menu>
+        </el-col>
+    </div>
+        <div id="msg">
+            <div id="smsg">
+                <div id="sid">学号：<p>2000000</p></div>
+                <div id="sname">姓名：<p>张三</p></div>
+                <div id="sgender">性别：<p>男</p></div>
+                <div id="sbirth">出生日期：<p>2005-01-01</p></div>
+                <div id="slocal">籍贯：<p>山东省</p></div>
+                <div id="sclass">班级：<p>6</p></div>
+                <div id="sregisterTime">入校日期:<p>2016-01-01</p></div>
+                <div id="sage">年龄：<p>11</p></div>
+                <div id="sidcard">身份证号：<p>201201155405263584</p></div>
+                <div id="sphone">手机号:<el-input  v-model="input" placeholder="无" ></el-input></div>
+                <div id="save"><el-button type="primary">保存</el-button></div>
+            </div>
+            <div id="experience">
+                <template>
+                    <el-table
+                            :data="tableData"
+                            stripe
+                            style="width: 100%">
+                        <el-table-column
+                                prop="num"
+                                label="编号"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="姓名"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="msg"
+                                label="奖惩信息">
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </div>
+            <div id="choose">
+                <div id="course-id">课程号：<el-input v-model="input" placeholder="课程号查找" id="search-id"></el-input><el-button type="primary">选课</el-button></div>
+                <p >对不起！不存在该课程</p>
+            </div>
+            <div id="drop">
+                <template>
+                    <el-table
+                            :data="tableData4"
+                            border
+                            style="width: 100% ; height:auto "
+                            >
+                        <el-table-column
+                                prop="num"
+                                label="课程编号"
+                                width="5%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label=课程名称"
+                                width="20%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="address"
+                                label="上课地点"
+                                width="20%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="date"
+                                label="上课时间"
+                                width="20%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="credit"
+                                label="学分"
+                                width="5%">
+                        </el-table-column>
+                        <el-table-column
+                                prop="property"
+                                label="课程属性"
+                                width="20%">
+                        </el-table-column>
+                        <el-table-column
+                                label="操作"
+                                width="10%">
+                            <template scope="scope">
+                                <el-button
+                                        @click.native.prevent="deleteRow(scope.$index, tableData4)"
+                                        type="text"
+                                        size="small">
+                                    移除
+                                </el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </div>
+            <div id="classbox">
+                <div class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition" style="width: 100%;">
+                    <div class="hidden-columns"><div></div> <div></div> <div></div> <div></div> <div></div> <div></div> <div></div> <div></div></div>
+                    <div class="el-table__header-wrapper">
+                        <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 100%;">
+                            <colgroup>
+                                <col name="el-table_1_column_15" width="180">
+                                <col name="el-table_1_column_16" width="180">
+                                <col name="el-table_1_column_17" width="180">
+                                <col name="el-table_1_column_18" width="180">
+                                <col name="el-table_1_column_19" width="180">
+                                <col name="el-table_1_column_20" width="180">
+                                <col name="el-table_1_column_21" width="180">
+                                <col name="el-table_1_column_22" width="180">
+                                <col name="gutter" width="">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th colspan="1" rowspan="1" class="el-table_1_column_15 is-leaf"><div class="cell">课节/日期</div></th>
+                                <th colspan="1" rowspan="1" class="el-table_1_column_16 is-leaf"><div class="cell"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">星期一</font></font></div></th>
+                                <th colspan="1" rowspan="1" class="el-table_1_column_17 is-leaf"><div class="cell"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">星期二</font></font></div></th>
+                                <th colspan="1" rowspan="1" class="el-table_1_column_18 is-leaf"><div class="cell"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">星期三</font></font></div></th>
+                                <th colspan="1" rowspan="1" class="el-table_1_column_19 is-leaf"><div class="cell"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">星期四</font></font></div></th>
+                                <th colspan="1" rowspan="1" class="el-table_1_column_20 is-leaf"><div class="cell"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">星期五</font></font></div></th>
+                                <th colspan="1" rowspan="1" class="el-table_1_column_21 is-leaf"><div class="cell"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">星期六</font></font></div></th>
+                                <th colspan="1" rowspan="1" class="el-table_1_column_22 is-leaf"><div class="cell"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">星期日</font></font></div></th>
+                                <th class="gutter" style="width: 0px;"></th></tr></thead></table></div><div class="el-table__body-wrapper"><table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 100%;">
+                            <colgroup>
+                                <col name="el-table_1_column_15" width="180">
+                                <col name="el-table_1_column_16" width="180">
+                                <col name="el-table_1_column_17" width="180">
+                                <col name="el-table_1_column_18" width="180">
+                                <col name="el-table_1_column_19" width="180">
+                                <col name="el-table_1_column_20" width="180">
+                                <col name="el-table_1_column_21" width="180">
+                                <col name="el-table_1_column_22" width="180"></colgroup>
+                            <tbody>
+                            <tr class="el-table__row " id="el-table__row1">
+                                <td class="el-table_1_column_15"><div class="cell"></div>第一节</td>
+                                <td class="el-table_1_column_16 "><div class="cell c1"></div></td>
+                                <td class="el-table_1_column_17 "><div class="cell c2"></div></td>
+                                <td class="el-table_1_column_18 "><div class="cell c3"></div></td>
+                                <td class="el-table_1_column_19 "><div class="cell c4"></div></td>
+                                <td class="el-table_1_column_20 "><div class="cell c5"></div></td>
+                                <td class="el-table_1_column_21 "><div class="cell c6"></div></td>
+                                <td class="el-table_1_column_22 "><div class="cell c7"></div></td>
+                            </tr>
+                            <tr class="el-table__row" id="el-table__row2">
+                                <td class="el-table_1_column_15"><div class="cell"></div>第二节</td>
+                                <td class="el-table_1_column_16 "><div class="cell c1"></div></td>
+                                <td class="el-table_1_column_17 "><div class="cell c2"></div></td>
+                                <td class="el-table_1_column_18 "><div class="cell c3"></div></td>
+                                <td class="el-table_1_column_19 "><div class="cell c4"></div></td>
+                                <td class="el-table_1_column_20 "><div class="cell c5"></div></td>
+                                <td class="el-table_1_column_21 "><div class="cell c6"></div></td>
+                                <td class="el-table_1_column_22 "><div class="cell c7"></div></td>
+                            </tr>
+                            <tr class="el-table__row" id="el-table__row3">
+                                <td class="el-table_1_column_15"><div class="cell"></div>第三节</td>
+                                <td class="el-table_1_column_16 "><div class="cell c1"></div></td>
+                                <td class="el-table_1_column_17 "><div class="cell c2"></div></td>
+                                <td class="el-table_1_column_18 "><div class="cell c3"></div></td>
+                                <td class="el-table_1_column_19 "><div class="cell c4"></div></td>
+                                <td class="el-table_1_column_20 "><div class="cell c5"></div></td>
+                                <td class="el-table_1_column_21 "><div class="cell c6"></div></td>
+                                <td class="el-table_1_column_22 "><div class="cell c7"></div></td>
+                            </tr>
+                            <tr class="el-table__row" id="el-table__row4">
+                                <td class="el-table_1_column_15"><div class="cell"></div>第四节</td>
+                                <td class="el-table_1_column_16 "><div class="cell c1"></div></td>
+                                <td class="el-table_1_column_17 "><div class="cell c2"></div></td>
+                                <td class="el-table_1_column_18 "><div class="cell c3"></div></td>
+                                <td class="el-table_1_column_19 "><div class="cell c4"></div></td>
+                                <td class="el-table_1_column_20 "><div class="cell c5"></div></td>
+                                <td class="el-table_1_column_21 "><div class="cell c6"></div></td>
+                                <td class="el-table_1_column_22 "><div class="cell c7"></div></td>
+                            </tr>
+
+                            <!----></tbody></table><!----></div><!----><!----><!----><!---->
+                        <div class="el-table__column-resize-proxy" style="left: 1374.33px; display: none;"></div>
+                        <div class="resize-triggers"><div class="expand-trigger"><div style="width: 100%; height: auto;"></div></div><div class="contract-trigger"></div></div></div>
+                <div id="classmsg">
+                    <template>
+                        <el-table
+                                :data="tableData"
+                                border
+                                style="width: 100%">
+                            <el-table-column
+                                    prop="cid"
+                                    label="课程号"
+                                    width="180">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="course"
+                                    label="课程名称"
+                                    width="180">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="courseTime"
+                                    label="上课时间"
+                                    width="180">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="courseAdd"
+                                    label="上课地点"
+                                    width="180">
+                            </el-table-column>
+                            <el-table-column
+                                    prop="courseTeacher"
+                                    label="教师"
+                            >
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+            </div>
+            <div id="scorebox">
+                <template>
+                <el-table
+                        :data="tableData"
+                        stripe
+                        style="width: 100%">
+                    <el-table-column
+                            prop="cid"
+                            label="课程号"
+                            width="180">
+                    </el-table-column>
+                    <el-table-column
+                            prop="course"
+                            label="课程名"
+                            width="250">
+                    </el-table-column>
+                    <el-table-column
+                            prop="courseScore"
+                            label="成绩"
+                            width="180">
+                    </el-table-column>
+                    <el-table-column
+                            prop="courseTeacher"
+                            label="任课教师">
+                    </el-table-column>
+                </el-table>
+             </template>
+            </div>
+        </div>
+    </div>
+</body>
+<!-- 引入 -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el:'#item1',
+        data:{
+            choosed1:'choosed',
+            choosed2:'',
+        },
+        methods: {
+            handleOpen(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            open1(){
+                $('#smsg').css('display','block');
+                $('#experience').css('display','none');
+                this.choosed1='choosed';
+                this.choosed2='';
+            },
+            open2(){
+                $('#smsg').css('display','none');
+                $('#experience').css('display','block');
+                this.choosed2='choosed';
+                this.choosed1='';
+            },
+            returnnow(){
+                $('#smsg').css('display','none');
+                $('#experience').css('display','none');
+                $('#item1').css('display','none');
+                $('#second-box').css('display','none');
+                $('#body-box').css('display','flex');
+                this.choosed1='choosed';
+                this.choosed2='';
+            }
+        }
+    });
+    new Vue({
+        el:'#item2',
+        data:{
+            choosed1:'choosed',
+            choosed2:'',
+        },
+        methods: {
+            handleOpen(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            open1(){
+                $('#choose').css('display','block');
+                $('#drop').css('display','none');
+                this.choosed1='choosed';
+                this.choosed2='';
+            },
+            open2(){
+                $('#choose').css('display','none');
+                $('#drop').css('display','block');
+                this.choosed2='choosed';
+                this.choosed1='';
+            },
+            returnnow(){
+                $('#choose').css('display','none');
+                $('#drop').css('display','none');
+                $('#item2').css('display','none');
+                $('#second-box').css('display','none');
+                $('#body-box').css('display','flex');
+                this.choosed1='choosed';
+                this.choosed2='';
+            }
+        }
+    });
+    new Vue({
+        el:'#item3',
+        data:{
+            choosed1:'choosed',
+            choosed2:'',
+        },
+        methods: {
+            handleOpen(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            open1(){
+                $('#classbox').css('display','block');
+                $('#scorebox').css('display','none');
+                this.choosed1='choosed';
+                this.choosed2='';
+            },
+            open2(){
+                $('#classbox').css('display','none');
+                $('#scorebox').css('display','block');
+                this.choosed2='choosed';
+                this.choosed1='';
+            },
+            returnnow(){
+                $('#classbox').css('display','none');
+                $('#scorebox').css('display','none');
+                $('#item3').css('display','none');
+                $('#second-box').css('display','none');
+                $('#body-box').css('display','flex');
+                this.choosed1='choosed';
+                this.choosed2='';
+            }
+        }
+    });
+    new Vue({
+        el:'#sphone',
+        data:{
+            input:''
+        },
+
+    });
+    new Vue({
+        el:'#course-id',
+        data:{
+            input:''
+        },
+
+    })
+    new Vue({
+        el:"#save",
+        data:{
+
+        }
+    });
+    var experience=new Vue({
+        el:'#experience',
+        data:{
+            tableData: [{
+                num: '2016-05-02',
+                name: '王小虎',
+                msg: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                num: '2016-05-02',
+                name: '王小虎',
+                msg: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                num: '2016-05-02',
+                name: '王小虎',
+                msg: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                num: '2016-05-02',
+                name: '王小虎',
+                msg: '上海市普陀区金沙江路 1518 弄'
+            }]
+
+
+        }
+    });
+    var drop=new Vue({
+        el:'#drop',
+        methods: {
+            deleteRow(index, rows) {
+                rows.splice(index, 1);
+            }
+        },
+        data: {
+
+                tableData4: [{
+                    num: '001',
+                    name: '数据库',
+                    address: '软件园',
+                    date: '2017-8-8',
+                    credit: '2',
+                    property: '必修'
+                }, {
+                    num: '001',
+                    name: '数据库',
+                    address: '软件园',
+                    date: '2017-8-8',
+                    credit: '2',
+                    property: '必修'
+                }, {
+                    num: '001',
+                    name: '数据库',
+                    address: '软件园',
+                    date: '2017-8-8',
+                    credit: '2',
+                    property: '必修'
+                }, {
+                    num: '001',
+                    name: '数据库',
+                    address: '软件园',
+                    date: '2017-8-8',
+                    credit: '2',
+                    property: '必修'
+                }, {
+                    num: '001',
+                    name: '数据库',
+                    address: '软件园',
+                    date: '2017-8-8',
+                    credit: '2',
+                    property: '必修'
+                }, {
+                    num: '001',
+                    name: '数据库',
+                    address: '软件园',
+                    date: '2017-8-8',
+                    credit: '2',
+                    property: '必修'
+                }, {
+                    num: '001',
+                    name: '数据库',
+                    address: '软件园',
+                    date: '2017-8-8',
+                    credit: '2',
+                    property: '必修'
+                }]
+
+        }
+
+    });
+    var scorebox=new Vue({
+        el:'#scorebox',
+        data:{
+            tableData: [{
+                course:"数据库",
+                courseScore:"int",
+                courseTeacher:"string",
+                cid:"string"
+            }, {
+                course:"数据库",
+                courseScore:"int",
+                courseTeacher:"string",
+                cid:"string"
+            }, {
+                course:"数据库",
+                courseScore:"int",
+                courseTeacher:"string",
+                cid:"string"
+            }, {
+                course:"数据库",
+                courseScore:"int",
+                courseTeacher:"string",
+                cid:"string"
+            }]
+
+
+        }
+    });
+    var classbox=new Vue({
+        el:'#classbox',
+        data:{
+            tableData:[{
+               course:'数据库',
+                courseTime:'2017-7-7',
+                courseAdd:'软件园',
+                courseTeacher:'安安',
+                cid:'001'
+            },{
+                course:'数据库',
+                courseTime:'2017-7-7',
+                courseAdd:'软件园',
+                courseTeacher:'安安',
+                cid:'001'
+            },{
+                course:'数据库',
+                courseTime:'2017-7-7',
+                courseAdd:'软件园',
+                courseTeacher:'安安',
+                cid:'001'
+            },{
+                course:'数据库',
+                courseTime:'2017-7-7',
+                courseAdd:'软件园',
+                courseTeacher:'安安',
+                cid:'001'
+            },]
+        }
+    });
+    var bodybox=new Vue({
+        el:'#body-box',
+        methods:{
+            open1(){
+                $('#smsg').css('display','block');
+                $('#item1').css('display','block');
+                $('#second-box').css('display','flex');
+                $('#body-box').css('display','none');
+            },
+            open2(){
+                $('#choose').css('display','block');
+                $('#item2').css('display','block');
+                $('#second-box').css('display','flex');
+                $('#body-box').css('display','none');
+            },
+            open3(){
+                $('#classbox').css('display','block');
+                $('#item3').css('display','block');
+                $('#second-box').css('display','flex');
+                $('#body-box').css('display','none');
+            }
+        }
+    });
+    var hheight= $(document).height();
+    $('.item').height(hheight-80);
+    $('#msg').height(hheight-80);
+    $('html').height(hheight-80);
+
+</script>
+</html>

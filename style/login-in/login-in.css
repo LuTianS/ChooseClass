@@ -1,0 +1,160 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color: #e8e8e8;
+    background-image: url("../../icon/student/bg.jpg");
+
+}
+#main{
+    box-shadow:0px 0px 8px #7b7b7b;
+    padding-top:30px;
+    width: 500px;
+    height:450px;
+    margin:0 auto;
+    margin-top: 200px;
+    background-color: #fafafa;
+    border-radius:15px 15px 15px 15px;
+    z-index: 10;
+}
+#top-logo{
+    width:400px;
+    height:50px;
+    padding-top:30px;
+    padding-left: 100px;
+}
+#top-logo img{
+    float:left;
+    height:50px;
+    width:50px;
+}
+#top-logo p{
+    font: 45px 幼圆;
+    display: inline-block;
+    height:50px;
+    width:340px;
+    margin:0;
+    margin-left:10px;
+    letter-spacing: 5px;
+    line-height: 50px;
+    color: #cdcdcd;
+}
+#account,#password{
+    margin-top: 40px;
+    padding-left:50px;
+    width:450px;
+    height:50px;
+}
+#account-text,#password-text{
+    display:inline-block;
+    width:300px;
+    height:50px;
+    margin-left: 20px;
+
+}
+#account img{
+    float: left;
+    padding-top:3px;
+}
+#password img{
+    float: left;
+    padding-top:3px;
+}
+#login-button{
+    width:250px;
+    height: 50px;
+    margin:0 auto;
+
+}
+#login-button2{
+    width:250px;
+    height: 50px;
+    letter-spacing: 40px;
+    text-indent: 35px;
+    background-color: #3881fa;
+    color:white;
+
+}
+.student{
+    position:absolute;
+    background-color: #efefef;
+    width:100px;
+    height:55px;
+    left:50%;
+    margin-left:-235px;
+    margin-top:-56px;
+    border-radius:15px 15px 0 0;
+    letter-spacing: 3px;
+    line-height: 55px;
+    z-index: 1;
+
+
+}
+.teacher{
+    position:absolute;
+    background-color: #efefef;
+    width:100px;
+    height:55px;
+    left:50%;
+    margin-left:-135px;
+    margin-top:-56px;
+    border-radius:15px 15px 0 0;
+    letter-spacing: 3px;
+    line-height: 55px;
+    text-indent: 3px;
+    z-index: 1;
+
+
+}
+.admin{
+    position:absolute;
+    background-color: #efefef;
+    width:100px;
+    height:55px;
+    left:50%;
+    margin-left:-35px;
+    margin-top:-56px;
+    border-radius:15px 15px 0 0;
+    letter-spacing: 1px;
+    line-height: 55px;
+    z-index: 1;
+
+
+}
+.admin img{
+    padding-top:10px;
+    padding-left:10px;
+}
+.teacher img{
+    padding-top:10px;
+    padding-left:10px;
+}
+.student img{
+    padding-top:10px;
+    padding-left:10px;
+}
+#forget{
+    margin:0 auto;
+    width:300px;
+    text-align: center;
+    padding:20px;
+
+}
+#choose{
+    background-color: #fafafa;
+    box-shadow:-2px -4px 8px #7b7b7b;
+    border-bottom: 1px solid #fafafa;
+
+
+    z-index: 2;
+}
+#message {
+    text-align: center;
+    color: red;
+    font-size: 12px;
+}
+
+a{
+    font: 18px 幼圆;
+    text-decoration: none;
+    color:#cdcdcd;
+}
